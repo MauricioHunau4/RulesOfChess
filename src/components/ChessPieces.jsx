@@ -25,8 +25,8 @@ export const King = () => {
                 */}
             <primitive
                 object={king.scene}
-                scale={1}
-                position={[0, 0, 0]}
+                scale={2}
+                position={[0, -1, 0]}
                 rotation={[0.05, 0, 0]} />
         </mesh>
     )
@@ -63,8 +63,8 @@ export const Bishop = () => {
                 */}
                 <primitive
                     object={bishop.scene}
-                    scale={1}
-                    position={[0, 0, 0]}
+                    scale={2}
+                    position={[0, -1, 0]}
                     rotation={[0.05, 0, 0]} />
             </mesh>
         </>
@@ -94,8 +94,8 @@ export const Knight = () => {
                 */}
                 <primitive
                     object={knight.scene}
-                    scale={1}
-                    position={[0, 0, 0]}
+                    scale={2}
+                    position={[0, -1, 0]}
                     rotation={[0.05, 0, 0]} />
             </mesh>
         </>
@@ -125,8 +125,8 @@ export const Pawn = () => {
                 */}
                 <primitive
                     object={pawn.scene}
-                    scale={0.12}
-                    position={[0, 0.59, 0]}
+                    scale={0.24}
+                    position={[0, 0.14, 0]}
                     rotation={[0.05, 0, 0]} />
             </mesh>
         </>
@@ -157,8 +157,8 @@ export const Queen = () => {
                 */}
                 <primitive
                     object={queen.scene}
-                    scale={1}
-                    position={[0, 0, 0]}
+                    scale={2}
+                    position={[0, -1, 0]}
                     rotation={[0.05, 0, 0]} />
             </mesh>
         </>
@@ -187,8 +187,8 @@ export const Rook = () => {
                 */}
                 <primitive
                     object={rook.scene}
-                    scale={1}
-                    position={[0, 0, 0]}
+                    scale={2}
+                    position={[0, -1, 0]}
                     rotation={[0.05, 0, 0]}
                 />
             </mesh>

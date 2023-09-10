@@ -5,7 +5,7 @@ const ComponentsChess = () => {
     const [clicked, setClicked] = useState('')
     
     return (
-        <div className="flex h-full">
+        <div className="flex h-2/4">
             <ChessCanvasRook onClick={()=>setClicked('rook')}/>
             <ChessCanvasQueen onClick={()=>setClicked('queen')}/>
             <ChessCanvasKing onClick={()=>setClicked('king')}/>
