@@ -15,6 +15,19 @@
   -webkit-text-size-adjust: 100%;
 }
 
+.animation-text{
+  animation: 1s linear opacity forwards; 
+}
+
+@keyframes opacity{
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+}
+
 a {
   font-weight: 500;
   color: #646cff;

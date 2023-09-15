@@ -3,15 +3,15 @@ import { ChessCanvasRook, ChessCanvasQueen, ChessCanvasKing, ChessCanvasKnight, 
 
 const ComponentsChess = () => {
     const [clicked, setClicked] = useState('')
-    
+
     return (
-        <div className="flex h-2/4">
-            <ChessCanvasRook onClick={()=>setClicked('rook')}/>
-            <ChessCanvasQueen onClick={()=>setClicked('queen')}/>
-            <ChessCanvasKing onClick={()=>setClicked('king')}/>
-            <ChessCanvasKnight onClick={()=>setClicked('knight')}/>
-            <ChessCanvasPawn onClick={()=>setClicked('pawn')}/>
-            <ChessCanvasBishop onClick={()=>setClicked('bishop')}/>
+        <div className="flex" style={clicked === '' ? {height: '50%' } : {height: '100%'}}>
+            <ChessCanvasRook setClicked={setClicked} clicked={clicked}/>
+            <ChessCanvasQueen setClicked={setClicked} clicked={clicked}/>
+            <ChessCanvasKing setClicked={setClicked} clicked={clicked}/>
+            <ChessCanvasKnight setClicked={setClicked} clicked={clicked}/>
+            <ChessCanvasBishop setClicked={setClicked} clicked={clicked}/>
+            <ChessCanvasPawn setClicked={setClicked} clicked={clicked}/>
         </div>
     )
 }
