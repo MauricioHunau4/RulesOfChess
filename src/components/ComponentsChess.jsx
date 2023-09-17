@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { ChessCanvasRook, ChessCanvasQueen, ChessCanvasKing, ChessCanvasKnight, ChessCanvasPawn, ChessCanvasBishop } from "../canvasComponents/ChessComponent"
+import { ChessCanvasRook, ChessCanvasQueen, ChessCanvasKing, ChessCanvasKnight, ChessCanvasPawn, ChessCanvasBishop, ChessCanvasBoard } from "../canvasComponents/ChessComponent"
 
 const ComponentsChess = () => {
     const [clicked, setClicked] = useState('')
@@ -15,4 +15,7 @@ const ComponentsChess = () => {
         </div>
     )
 }
+{/*<div className="flex h-full justify-around flex-col">*/ }
+{/* <ChessCanvasBoard clicked={clicked}  />
+</div> */}
 export default ComponentsChess

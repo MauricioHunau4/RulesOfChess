@@ -19,6 +19,19 @@
   animation: 1s linear opacity forwards; 
 }
 
+.animation-fade-out{
+  animation: 1s linear opacity-out forwards; 
+}
+
+@keyframes opacity-out{
+  from{
+    opacity: 1;
+  }
+  to{
+    opacity: 0;
+  }
+}
+
 @keyframes opacity{
   from{
     opacity: 0;

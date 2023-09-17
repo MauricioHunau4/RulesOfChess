@@ -122,7 +122,7 @@ export const KingDescription = () => {
                 <li><strong>Starting position</strong>:<p> In a standard chess game, each player starts with one king. For White, the king starts on the e1 square, and for Black, the king starts on the e8 square.</p></li>
                 <li><strong>Movement</strong>:<p> Kings can move one square in any direction (horizontally, vertically, or diagonally). They can never move into check (a position where they could be captured on the next move).</p></li>
                 <li><strong>Capture</strong>:<p> Kings capture enemy pieces by moving to the square occupied by the opponent's piece, similar to their normal movement. When capturing, the king removes the captured piece from the board.</p></li>
-                <li><strong>Castling</strong>:<p> Castling is a special chess move that involves the king and one of the rooks. The king and the rook move simultaneously, and it's subject to specific conditions:
+                <li><strong>Castling</strong>: Castling is a special chess move that involves the king and one of the rooks. The king and the rook move simultaneously, and it's subject to specific conditions:
                     <ul className="list-disc">
                         <li className="ms-12">The king and the chosen rook have not moved previously in the game.</li>
                         <li className="ms-12">There are no pieces between the king and the rook.</li>
@@ -130,7 +130,7 @@ export const KingDescription = () => {
                         <li className="ms-12">The squares the king moves across or lands on during castling are not under attack.</li>
                     </ul>
                     Castling can occur on the king-side (short castling) or queen-side (long castling). It's a strategic move to improve the king's safety and connect the rooks.
-                </p></li>
+                </li>
                 <li><strong>Value</strong>:<p> The king is the most valuable piece on the chessboard. It is often considered to be worth approximately four points due to its importance in the game.</p></li>
                 <li><strong>Strategic importance</strong>:<p> The king is the most important piece on the chessboard. It must be protected at all costs, and it's often a good idea to keep it near the center of the board.</p></li>
                 <li><strong>Endgame</strong>:<p> In the endgame, the king becomes a powerful piece. It can be used to attack the opponent's pieces and help promote pawns. However, it must be protected at all costs, as losing the king means losing the game.</p></li>
@@ -147,7 +147,7 @@ export const ChessRules = () => {
             </h1>
             <ul className="text-left w-full leading-loose overflow-auto " style={{ height: '700px' }}>
                 <li><strong>Goal</strong>:<p> The goal of chess is to checkmate the opponent's king. Checkmate occurs when the king is in check and cannot escape from capture.</p></li>
-                <li><strong>Starting position</strong>:<p> In a standard chess game, each player starts with the following pieces:
+                <li><strong>Starting position</strong>: In a standard chess game, each player starts with the following pieces:
                     <ul className="list-disc">
                         <li className="ms-12">One king</li>
                         <li className="ms-12">One queen</li>
@@ -157,12 +157,12 @@ export const ChessRules = () => {
                         <li className="ms-12">Eight pawns</li>
                     </ul>
                     The pieces are placed on the first two rows (or ranks) of the chessboard. The first row is called the "first rank," and the second row is called the "second rank." For White, the pieces are placed on the first rank, and for Black, the pieces are placed on the eighth rank.
-                </p></li>
+               </li>
                 <li><strong>Capture</strong>:<p> A piece captures an opponent's piece by moving to the square occupied by the opponent's piece. When capturing, the piece removes the captured piece from the board.</p></li>
                 <li><strong>Check</strong>:<p> A king is in check when it is under attack by an opponent's piece. A king in check must move out of check on the next move. A player cannot make a move that puts or leaves their king in check.</p></li>
                 <li><strong>Checkmate</strong>:<p> Checkmate occurs when the king is in check and cannot escape from capture. The game ends immediately when checkmate occurs.</p></li>
                 <li><strong>Stalemate</strong>:<p> Stalemate occurs when the king is not in check but cannot make a legal move. The game ends immediately when stalemate occurs, and it is considered a draw.</p></li>
-                <li><strong>Draw</strong>:<p> A draw occurs when neither player can win the game. This can happen in several ways:
+                <li><strong>Draw</strong>: A draw occurs when neither player can win the game. This can happen in several ways:
                     <ul className="list-disc">
                         <li className="ms-12">Stalemate</li>
                         <li className="ms-12">Agreement between the players</li>
@@ -170,10 +170,10 @@ export const ChessRules = () => {
                         <li className="ms-12">The fifty-move rule</li>
                         <li className="ms-12">Insufficient material</li>
                     </ul>
-                </p></li>
+                </li>
                 <li><strong>Threefold repetition</strong>:<p> Threefold repetition occurs when the same position occurs three times in a game with the same player to move. The position does not have to occur in consecutive moves, but it must be the same player's turn to move each time. The game ends immediately when threefold repetition occurs, and it is considered a draw.</p></li>
                 <li><strong>The fifty-move rule</strong>:<p> The fifty-move rule states that if there have been fifty consecutive moves by each player without a capture or pawn move, the game is a draw. The game ends immediately when the fifty-move rule occurs.</p></li>
-                <li><strong>Insufficient material</strong>:<p> Insufficient material occurs when neither player has enough material to checkmate the opponent's king. This can happen in several ways:
+                <li><strong>Insufficient material</strong>: Insufficient material occurs when neither player has enough material to checkmate the opponent's king. This can happen in several ways:
                     <ul className="list-disc">
                         <li className="ms-12">King vs. king</li>
                         <li className="ms-12">King and bishop vs. king</li>
@@ -181,18 +181,63 @@ export const ChessRules = () => {
                         <li className="ms-12">King and bishop vs. king and bishop with bishops on the same color</li>
                     </ul>
                     The game ends immediately when insufficient material occurs, and it is considered a draw.
-                </p></li>
-                <li><strong>Time control</strong>:<p> Time control is a method of limiting the length of a chess game. It is used in tournaments to ensure that games do not go on for too long. There are several types of time control:
+                </li>
+                <li><strong>Time control</strong>: Time control is a method of limiting the length of a chess game. It is used in tournaments to ensure that games do not go on for too long. There are several types of time control:
                     <ul className="list-disc">
                         <li className="ms-12">Sudden death</li>
                         <li className="ms-12">Incremental</li>
                         <li className="ms-12">Delay</li>
                     </ul>
-                </p></li>
+                </li>
                 <li><strong>Sudden death</strong>:<p> In sudden death time control, each player is given a certain amount of time to complete all of their moves. If a player runs out of time, they lose the game.</p></li>
                 <li><strong>Incremental</strong>:<p> In incremental time control, each player is given a certain amount of time to complete all of their moves. However, they are also given a certain amount of time for each move. If a player runs out of time, they lose the game.</p></li>
                 <li><strong>Delay</strong>:<p> In delay time control, each player is given a certain amount of time to complete all of their moves. However, they are also given a certain amount of time for each move. If a player runs out of time, they lose the game.</p></li>
             </ul>
         </div>
     )
+}
+
+export const ChessBoard = () => {
+return(
+    <div className="text-center w-3/4 animation-text">
+        <h1>
+            The chessboard
+        </h1>
+        <ul className="text-left w-full leading-loose overflow-auto " style={{ height: '700px' }}>
+            <li><strong>Appearance</strong>:<p> The chessboard is a square board with 64 squares arranged in an 8x8 grid. The squares are alternately light and dark in color.</p></li>
+            <li><strong>Coordinates</strong>:<p> Each square on the chessboard has a unique coordinate. The horizontal rows are called "ranks," and the vertical columns are called "files." The ranks are numbered from 1 to 8, and the files are labeled from a to h.</p></li>
+            <li><strong>Notation</strong>: Chess notation is a method of recording chess moves. It is used in chess books, magazines, and other publications. There are several types of chess notation:
+                <ul className="list-disc">
+                    <li className="ms-12">Algebraic notation</li>
+                    <li className="ms-12">Descriptive notation</li>
+                    <li className="ms-12">Coordinate notation</li>
+                </ul>
+            </li>
+            <li><strong>Algebraic notation</strong>:Algebraic notation is the most common type of chess notation. It uses the following symbols:
+                <ul className="list-disc">
+                    <li className="ms-12">K = king</li>
+                    <li className="ms-12">Q = queen</li>
+                    <li className="ms-12">R = rook</li>
+                    <li className="ms-12">B = bishop</li>
+                    <li className="ms-12">N = knight</li>
+                    <li className="ms-12">P = pawn</li>
+                </ul>
+                The symbols are followed by the square the piece moves to. For example, "Nf3" means "knight to f3."
+            </li>
+            <li><strong>Descriptive notation</strong>: Descriptive notation is an older type of chess notation. It uses the following symbols:
+                <ul className="list-disc">
+                    <li className="ms-12">K = king</li>
+                    <li className="ms-12">Q = queen</li>
+                    <li className="ms-12">R = rook</li>
+                    <li className="ms-12">B = bishop</li>
+                    <li className="ms-12">N = knight</li>
+                    <li className="ms-12">P = pawn</li>
+                </ul>
+                The symbols are followed by the square the piece moves to. For example, "Nf3" means "knight to f3."
+            </li>
+            <li><strong>Coordinate notation</strong>:<p> Coordinate notation is a type of chess notation that uses the coordinates of the squares on the chessboard. For example, "e4" means "pawn to e4."</p></li>
+        </ul>
+    </div>
+)
+   
 }

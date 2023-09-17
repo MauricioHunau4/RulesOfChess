@@ -199,3 +199,26 @@ export const Pawn = () => {
     )
 }
 
+
+export const Board = () => {
+    const board = useGLTF('./chess_pieces/board/scene.gltf')
+
+    return (
+        // To actually see something in our scene, we'll add a lowercase <mesh /> native element, 
+        //is a basic scene object in three.js, and it's used to hold the geometry and the material needed to represent a shape in 3D space.
+        <mesh>
+            {/* A light source positioned directly above the scene, with color fading from the sky color to the ground color. */}
+            <hemisphereLight intensity={2}
+                groundColor='grey' />
+
+            {/* A light that gets emitted from a single point in all directions. 
+                <pointLight intensity={1} />
+                */}
+            <primitive
+                object={board.scene}
+                scale={0.1}
+                position={[0, 0, 0]}
+                rotation={[-5, 0, 0]} />
+        </mesh>
+    )
+}

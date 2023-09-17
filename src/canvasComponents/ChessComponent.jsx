@@ -2,7 +2,7 @@ import { Suspense, useState } from "react"
 import { Canvas } from "@react-three/fiber"
 import { OrbitControls, Preload } from "@react-three/drei"
 import CanvasLoader from '../components/Loader'
-import { King, Queen, Pawn, Knight, Rook, Bishop } from '../components/ChessPieces'
+import { King, Queen, Pawn, Knight, Rook, Bishop, Board } from '../components/ChessPieces'
 import { BishopDescription, KingDescription, KnightDescription, PawnDescription, QueenDescription, RookDescription } from "../components/ChessDescription"
 
 // Hacer lo mismo con las otras piezas de ajedrez y agregar tablero
@@ -278,7 +278,6 @@ export const ChessCanvasBishop = ({ setClicked, clicked }) => {
             document.getElementById('bishop').classList.add('animation-text')
             setClicked('bishop')
         }
-
     }
 
     if (clicked === '' || clicked === 'bishop')
@@ -320,6 +319,43 @@ export const ChessCanvasBishop = ({ setClicked, clicked }) => {
                     <Preload all />
                 </Canvas>
                 {(clicked === 'bishop') && <BishopDescription />}
+            </div>
+        )
+}
+
+export const ChessCanvasBoard = () => {
+
+        return (
+            //The Canvas object is where you start to define your React Three Fiber Scene.
+            <div id="board" className="flex gap-6 animation-text mx-auto h-2/3 w-1/4" >
+                <Canvas
+                    style={{
+                        cursor: 'pointer',
+                    }}
+                    //frameloop="demand"
+                    shadows
+                    //the most important part because is from where are we looking from, {position:[x, y, z]}
+                    //to properly render the model
+                    gl={{ preserveDrawingBuffer: true }}
+                >
+                    <Suspense fallback={<CanvasLoader />}>
+                        {/* allow us to  move the model left and right*/}
+                        <OrbitControls
+                            enabled={false}
+                            //To permit rotate in a expecific angle, not up and down
+                            maxPolarAngle={Math.PI / 2}
+                            minPolarAngle={Math.PI / 2}
+                        />
+                        {/*(hover || clicked === 'board') && (
+                            <mesh position={[0, 1.5, 0]}>
+                                <coneGeometry args={[2, 5, 12]} />  Configura los parámetros del cono aquí 
+                                <meshBasicMaterial color="white" transparent opacity={0.3} />  Material para hacer el cono visible 
+                            </mesh>
+                        )*/}
+                        <Board />
+                    </Suspense>
+                    <Preload all />
+                </Canvas>
             </div>
         )
 }
