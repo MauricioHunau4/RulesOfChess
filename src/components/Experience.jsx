@@ -1,4 +1,4 @@
-import { Environment, OrbitControls, useCursor, useTexture } from "@react-three/drei"
+import { Environment, OrbitControls, RoundedBox, Text, useCursor, useTexture } from "@react-three/drei"
 import * as THREE from "three"
 import { Pawn } from "./Pawn"
 import { Rook } from "./Rook"
@@ -9,10 +9,14 @@ import { Knight } from "./Knight"
 import { useState } from "react"
 import { useSpring } from '@react-spring/three';
 
+const pawnDetails = 'The pawn is one of the most important pieces in the game'
+
 const Experience = () => {
     const [active, setActive] = useState(null)
     const [hovered, setHovered] = useState(null)
+
     useCursor(hovered)
+
     const scale = useSpring({
         scalePawn: active !== null && active !== 'pawn' ? [0, 0, 0] : active === 'pawn' ? [0.2, 0.2, 0.2] : [0.08, 0.08, 0.08],
         scaleRook: active !== null && active !== 'rook' ? [0, 0, 0] : active === 'rook' ? [1.7, 1.7, 1.7] : [0.7, 0.7, 0.7],
@@ -47,6 +51,21 @@ const Experience = () => {
                 zoom={0}
                 maxPolarAngle={Math.PI / 1.8}
                 minPolarAngle={Math.PI / 2.5} />
+            {active !== null && <RoundedBoxForEach>
+                <Text
+                    color="white"
+                    fontSize={0.2}
+                    maxWidth={3.6}
+                    position={[0, 1.14, 0.2]}
+                >
+                    {active === 'pawn' ? pawnDetails : ''}
+                    {active === 'rook' ? 'The rook is one of the most important pieces in the game' : ''}
+                    {active === 'bishop' ? 'The bishop is one of the most important pieces in the game' : ''}
+                    {active === 'king' ? 'The king is one of the most important pieces in the game' : ''}
+                    {active === 'queen' ? 'The queen is one of the most important pieces in the game' : ''}
+                    {active === 'knight' ? 'The knight is one of the most important pieces in the game' : ''}
+                </Text>
+            </RoundedBoxForEach>}
             <Pawn
                 scale={scale.scalePawn}
                 position-y={positionY.y}
@@ -99,10 +118,18 @@ const Experience = () => {
     )
 }
 
-const ChangeView = () => {
-
+const RoundedBoxForEach = ({ children }) => {
+    return (
+        <RoundedBox
+            args={[4, 3, 0.2]} position={[0, 0.3, 0]}
+            material-color="black"
+            radius={0.08} // Radius of the rounded corners. Default is 0.05
+            smoothness={4} // The number of curve segments. Default is 4
+            bevelSegments={4} // The number of bevel segments. Default is 4, setting it to 0 removes the bevel, as a result the texture is applied to the whole geometry.
+            creaseAngle={0.4}>
+            {children}
+        </RoundedBox>
+    )
 }
-
-
 
 export default Experience
