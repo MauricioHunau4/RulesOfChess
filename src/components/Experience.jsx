@@ -6,10 +6,12 @@ import { Bishop } from "./Bishop"
 import { King } from "./King"
 import { Queen } from "./Queen"
 import { Knight } from "./Knight"
-import { useState } from "react"
-import { useSpring } from '@react-spring/three';
+import { useEffect, useState } from "react"
+import { useSpring, a } from '@react-spring/three';
 
 const pawnDetails = 'The pawn is one of the most important pieces in the game'
+
+//Hacer condicional para cuando se vuelva a clickear el mismo objeto, pase a null pero con un setTimeout para que accione el roundedbox
 
 const Experience = () => {
     const [active, setActive] = useState(null)
@@ -51,7 +53,7 @@ const Experience = () => {
                 zoom={0}
                 maxPolarAngle={Math.PI / 1.8}
                 minPolarAngle={Math.PI / 2.5} />
-            {active !== null && <RoundedBoxForEach>
+            {active !== null && <RoundedBoxForEach active={active}>
                 <Text
                     color="white"
                     fontSize={0.2}
@@ -118,17 +120,33 @@ const Experience = () => {
     )
 }
 
-const RoundedBoxForEach = ({ children }) => {
+const RoundedBoxForEach = ({ children, active }) => {
+    const [isUnmounted, setIsUnmounted] = useState(false);
+    
+    const positionAnimation = useSpring({
+        from: { position: [0, isUnmounted? 10: 0.3, 0] },
+        to: { position: [0, isUnmounted? 0.3 : 10, 0] },
+      });
+
+      useEffect(() => {
+        if (active === null) {
+          // Si active pasa a ser null, establecemos isUnmounted en true para la última animación
+          setIsUnmounted(true);
+        }
+      }, [active]);
+
     return (
-        <RoundedBox
-            args={[4, 3, 0.2]} position={[0, 0.3, 0]}
-            material-color="black"
-            radius={0.08} // Radius of the rounded corners. Default is 0.05
-            smoothness={4} // The number of curve segments. Default is 4
-            bevelSegments={4} // The number of bevel segments. Default is 4, setting it to 0 removes the bevel, as a result the texture is applied to the whole geometry.
-            creaseAngle={0.4}>
-            {children}
-        </RoundedBox>
+        <a.group {...positionAnimation}>
+            <RoundedBox
+                args={[4, 3, 0.2]}
+                material-color="black"
+                radius={0.08} // Radius of the rounded corners. Default is 0.05
+                smoothness={4} // The number of curve segments. Default is 4
+                bevelSegments={4} // The number of bevel segments. Default is 4, setting it to 0 removes the bevel, as a result the texture is applied to the whole geometry.
+                creaseAngle={0.4}>
+                {children}
+            </RoundedBox>
+        </a.group>
     )
 }
 
