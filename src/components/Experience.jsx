@@ -6,10 +6,10 @@ import { Bishop } from "./Bishop"
 import { King } from "./King"
 import { Queen } from "./Queen"
 import { Knight } from "./Knight"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useSpring, a } from '@react-spring/three';
-
-const pawnDetails = 'The pawn is one of the most important pieces in the game'
+import { pawnDetails, rookDetails, queenDetails, bishopDetails, knightDetails, kingDetails } from '../constants/ChessDescription'
+import { bishop, king, knight, pawn, queen, rook } from "../constants/sounds"
 
 //Hacer condicional para cuando se vuelva a clickear el mismo objeto, pase a null pero con un setTimeout para que accione el roundedbox
 
@@ -19,6 +19,17 @@ const Experience = () => {
     const [test, setTest] = useState(false)
 
     useCursor(hovered)
+
+    useEffect(() => {
+        if (active === null) {
+            pawn.stop()
+            rook.stop()
+            queen.stop()
+            king.stop()
+            knight.stop()
+            bishop.stop()
+        }
+    }, [active])
 
     const scale = useSpring({
         scalePawn: active !== null && active !== 'pawn' ? [0, 0, 0] : active === 'pawn' ? [0.2, 0.2, 0.2] : [0.08, 0.08, 0.08],
@@ -44,7 +55,16 @@ const Experience = () => {
 
     const handlePieces = (piece) => {
         setTest(!test)
-        if(active === piece) setTimeout(() => {return setActive(null)}, 250)
+        setTimeout(() => {
+            if (piece === 'pawn' && !test) return pawn.play()
+            if (piece === 'rook' && !test) return rook.play()
+            if (piece === 'queen' && !test) return queen.play()
+            if (piece === 'king' && !test) return king.play()
+            if (piece === 'knight' && !test) return knight.play()
+            if (piece === 'bishop' && !test) return bishop.play()
+
+        }, 100)
+        if (active === piece) setTimeout(() => { return setActive(null) }, 250)
         setActive(piece)
     }
 
@@ -61,25 +81,20 @@ const Experience = () => {
                 maxPolarAngle={Math.PI / 1.8}
                 minPolarAngle={Math.PI / 2.5} />
             {active !== null && <RoundedBoxForEach test={test}>
-                <Text
-                    color="white"
-                    fontSize={0.2}
-                    maxWidth={3.6}
-                    position={[0, 1.14, 0.2]}
-                >
-                    {active === 'pawn' && (pawnDetails)}
-                    {active === 'rook' && 'The rook is one of the most important pieces in the game' }
-                    {active === 'bishop' && 'The bishop is one of the most important pieces in the game' }
-                    {active === 'king' && 'The king is one of the most important pieces in the game' }
-                    {active === 'queen' && 'The queen is one of the most important pieces in the game' }
-                    {active === 'knight' && 'The knight is one of the most important pieces in the game' }
-                </Text>
-            </RoundedBoxForEach>}
+
+                {active === 'pawn' && (pawnDetails)}
+                {active === 'rook' && 'The rook is one of the most important pieces in the game'}
+                {active === 'bishop' && 'The bishop is one of the most important pieces in the game'}
+                {active === 'king' && 'The king is one of the most important pieces in the game'}
+                {active === 'queen' && 'The queen is one of the most important pieces in the game'}
+                {active === 'knight' && 'The knight is one of the most important pieces in the game'}
+
+            </RoundedBoxForEach >}
             <Pawn
                 scale={scale.scalePawn}
                 position-y={positionY.y}
                 position-x={positionX.xPawn}
-                onClick={()=>handlePieces('pawn')}
+                onClick={() => handlePieces('pawn')}
                 onPointerEnter={() => setHovered('pawn')}
                 onPointerLeave={() => setHovered(null)}
             />
@@ -87,35 +102,35 @@ const Experience = () => {
                 scale={scale.scaleRook}
                 position-y={-1}
                 position-x={positionX.xRook}
-                onClick={()=>handlePieces('rook')}
+                onClick={() => handlePieces('rook')}
                 onPointerEnter={() => setHovered('rook')}
                 onPointerLeave={() => setHovered(null)} />
             <Bishop
                 scale={scale.scaleBishop}
                 position-y={-1}
                 position-x={positionX.xBishop}
-                onClick={()=>handlePieces('bishop')}
+                onClick={() => handlePieces('bishop')}
                 onPointerEnter={() => setHovered('bishop')}
                 onPointerLeave={() => setHovered(null)} />
             <King
                 scale={scale.scaleKing}
                 position-y={-1}
                 position-x={positionX.xKing}
-                onClick={()=>handlePieces( 'king')}
+                onClick={() => handlePieces('king')}
                 onPointerEnter={() => setHovered('king')}
                 onPointerLeave={() => setHovered(null)} />
             <Queen
                 scale={scale.scaleQueen}
                 position-y={-1}
                 position-x={positionX.xQueen}
-                onClick={()=>handlePieces('queen')}
+                onClick={() => handlePieces('queen')}
                 onPointerEnter={() => setHovered('queen')}
                 onPointerLeave={() => setHovered(null)} />
             <Knight
                 scale={scale.scaleKnight}
                 position-y={-1}
                 position-x={positionX.xKnight}
-                onClick={()=>handlePieces('knight')}
+                onClick={() => handlePieces('knight')}
                 onPointerEnter={() => setHovered('knight')}
                 onPointerLeave={() => setHovered(null)} />
             <mesh>
@@ -129,29 +144,44 @@ const Experience = () => {
 
 const RoundedBoxForEach = ({ children, test }) => {
     const [isUnmounted, setIsUnmounted] = useState(false);
-    
-    const positionAnimation = useSpring({
-        from: { position: [0, isUnmounted? 0.3: 10, 0] },
-        to: { position: [0, isUnmounted? -5.5 : 0.3, 0] },
-      });
 
-      useEffect(() => {
+    const positionAnimation = useSpring({
+        from: { position: [0.5, isUnmounted ? 0 : 10, 0] },
+        to: { position: [0.5, isUnmounted ? -5.5 : 0, 0] },
+    });
+
+    const opacityAnimation = useSpring({
+        from: { opacity: 0 },
+        to: { opacity: 1 },
+        config: { duration: 2000 },
+    });
+
+    useEffect(() => {
         if (!test) {
-          // Si active pasa a ser null, establecemos isUnmounted en true para la última animación
-          setIsUnmounted(true);
+            // Si active pasa a ser null, establecemos isUnmounted en true para la última animación
+            setIsUnmounted(true);
         }
-      }, [test]);
+    }, [test]);
 
     return (
         <a.group {...positionAnimation}>
             <RoundedBox
-                args={[4, 3, 0.2]}
+                args={[5.5, 4, 0.2]}
                 material-color="black"
                 radius={0.08} // Radius of the rounded corners. Default is 0.05
                 smoothness={4} // The number of curve segments. Default is 4
                 bevelSegments={4} // The number of bevel segments. Default is 4, setting it to 0 removes the bevel, as a result the texture is applied to the whole geometry.
                 creaseAngle={0.4}>
-                {children}
+                <Text
+                    color="white"
+                    textAlign="center"
+                    fontSize={0.16}
+                    maxWidth={5}
+                    position={[0, 0, 0.2]}
+                    {...opacityAnimation}
+                >
+                    {children}
+                </Text>
             </RoundedBox>
         </a.group>
     )

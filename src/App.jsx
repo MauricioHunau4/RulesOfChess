@@ -1,5 +1,4 @@
 import { Canvas } from "@react-three/fiber";
-import { ChessCanvasBoard } from "./canvasComponents/ChessComponent";
 import TitleName from "./components/TitleName"
 import 'tailwindcss/tailwind.css';
 import Experience from "./components/Experience";
