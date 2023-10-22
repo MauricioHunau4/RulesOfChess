@@ -16,6 +16,7 @@ const pawnDetails = 'The pawn is one of the most important pieces in the game'
 const Experience = () => {
     const [active, setActive] = useState(null)
     const [hovered, setHovered] = useState(null)
+    const [test, setTest] = useState(false)
 
     useCursor(hovered)
 
@@ -41,6 +42,12 @@ const Experience = () => {
         xBishop: active === 'bishop' ? -3.5 : 0.5,
     });
 
+    const handlePieces = (piece) => {
+        setTest(!test)
+        if(active === piece) setTimeout(() => {return setActive(null)}, 250)
+        setActive(piece)
+    }
+
     const map = useTexture('/textures/Realism.jpg')
 
     return (
@@ -53,26 +60,26 @@ const Experience = () => {
                 zoom={0}
                 maxPolarAngle={Math.PI / 1.8}
                 minPolarAngle={Math.PI / 2.5} />
-            {active !== null && <RoundedBoxForEach active={active}>
+            {active !== null && <RoundedBoxForEach test={test}>
                 <Text
                     color="white"
                     fontSize={0.2}
                     maxWidth={3.6}
                     position={[0, 1.14, 0.2]}
                 >
-                    {active === 'pawn' ? pawnDetails : ''}
-                    {active === 'rook' ? 'The rook is one of the most important pieces in the game' : ''}
-                    {active === 'bishop' ? 'The bishop is one of the most important pieces in the game' : ''}
-                    {active === 'king' ? 'The king is one of the most important pieces in the game' : ''}
-                    {active === 'queen' ? 'The queen is one of the most important pieces in the game' : ''}
-                    {active === 'knight' ? 'The knight is one of the most important pieces in the game' : ''}
+                    {active === 'pawn' && (pawnDetails)}
+                    {active === 'rook' && 'The rook is one of the most important pieces in the game' }
+                    {active === 'bishop' && 'The bishop is one of the most important pieces in the game' }
+                    {active === 'king' && 'The king is one of the most important pieces in the game' }
+                    {active === 'queen' && 'The queen is one of the most important pieces in the game' }
+                    {active === 'knight' && 'The knight is one of the most important pieces in the game' }
                 </Text>
             </RoundedBoxForEach>}
             <Pawn
                 scale={scale.scalePawn}
                 position-y={positionY.y}
                 position-x={positionX.xPawn}
-                onClick={() => setActive(active === 'pawn' ? null : 'pawn')}
+                onClick={()=>handlePieces('pawn')}
                 onPointerEnter={() => setHovered('pawn')}
                 onPointerLeave={() => setHovered(null)}
             />
@@ -80,35 +87,35 @@ const Experience = () => {
                 scale={scale.scaleRook}
                 position-y={-1}
                 position-x={positionX.xRook}
-                onClick={() => setActive(active === 'rook' ? null : 'rook')}
+                onClick={()=>handlePieces('rook')}
                 onPointerEnter={() => setHovered('rook')}
                 onPointerLeave={() => setHovered(null)} />
             <Bishop
                 scale={scale.scaleBishop}
                 position-y={-1}
                 position-x={positionX.xBishop}
-                onClick={() => setActive(active === 'bishop' ? null : 'bishop')}
+                onClick={()=>handlePieces('bishop')}
                 onPointerEnter={() => setHovered('bishop')}
                 onPointerLeave={() => setHovered(null)} />
             <King
                 scale={scale.scaleKing}
                 position-y={-1}
                 position-x={positionX.xKing}
-                onClick={() => setActive(active === 'king' ? null : 'king')}
+                onClick={()=>handlePieces( 'king')}
                 onPointerEnter={() => setHovered('king')}
                 onPointerLeave={() => setHovered(null)} />
             <Queen
                 scale={scale.scaleQueen}
                 position-y={-1}
                 position-x={positionX.xQueen}
-                onClick={() => setActive(active === 'queen' ? null : 'queen')}
+                onClick={()=>handlePieces('queen')}
                 onPointerEnter={() => setHovered('queen')}
                 onPointerLeave={() => setHovered(null)} />
             <Knight
                 scale={scale.scaleKnight}
                 position-y={-1}
                 position-x={positionX.xKnight}
-                onClick={() => setActive(active === 'knight' ? null : 'knight')}
+                onClick={()=>handlePieces('knight')}
                 onPointerEnter={() => setHovered('knight')}
                 onPointerLeave={() => setHovered(null)} />
             <mesh>
@@ -120,20 +127,20 @@ const Experience = () => {
     )
 }
 
-const RoundedBoxForEach = ({ children, active }) => {
+const RoundedBoxForEach = ({ children, test }) => {
     const [isUnmounted, setIsUnmounted] = useState(false);
     
     const positionAnimation = useSpring({
-        from: { position: [0, isUnmounted? 10: 0.3, 0] },
-        to: { position: [0, isUnmounted? 0.3 : 10, 0] },
+        from: { position: [0, isUnmounted? 0.3: 10, 0] },
+        to: { position: [0, isUnmounted? -5.5 : 0.3, 0] },
       });
 
       useEffect(() => {
-        if (active === null) {
+        if (!test) {
           // Si active pasa a ser null, establecemos isUnmounted en true para la última animación
           setIsUnmounted(true);
         }
-      }, [active]);
+      }, [test]);
 
     return (
         <a.group {...positionAnimation}>
