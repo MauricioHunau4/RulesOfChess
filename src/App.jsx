@@ -1,5 +1,4 @@
 import { Canvas } from "@react-three/fiber";
-import TitleName from "./components/TitleName"
 import 'tailwindcss/tailwind.css';
 import Experience from "./components/Experience";
 
@@ -11,8 +10,6 @@ const App = () => {
         <color attach={'background'} args={['#242424']} />
         <Experience/>
       </Canvas>
-      {/* <ComponentsChess/> */}
-      {/* <ChessCanvasBoard /> */}
     </>
   )
 }

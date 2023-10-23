@@ -10,24 +10,21 @@ import { useEffect, useRef, useState } from "react"
 import { useSpring, a } from '@react-spring/three';
 import { pawnDetails, rookDetails, queenDetails, bishopDetails, knightDetails, kingDetails } from '../constants/ChessDescription'
 import { bishop, king, knight, pawn, queen, rook } from "../constants/sounds"
+import { useDrag } from "react-use-gesture"
 
 //Hacer condicional para cuando se vuelva a clickear el mismo objeto, pase a null pero con un setTimeout para que accione el roundedbox
 
 const Experience = () => {
     const [active, setActive] = useState(null)
     const [hovered, setHovered] = useState(null)
-    const [test, setTest] = useState(false)
-
+    const [audio, setAudio] = useState(false)
+    const [scaleRoundedBox, setScaleRoundedBox] = useState(3.5)
     useCursor(hovered)
+
 
     useEffect(() => {
         if (active === null) {
-            pawn.stop()
-            rook.stop()
-            queen.stop()
-            king.stop()
-            knight.stop()
-            bishop.stop()
+            Howler.stop()
         }
     }, [active])
 
@@ -54,15 +51,22 @@ const Experience = () => {
     });
 
     const handlePieces = (piece) => {
-        setTest(!test)
+        setAudio(!audio)
+        Howler.volume(0.8)
+        if (piece === 'pawn') setScaleRoundedBox(4.4)
+        if (piece === 'rook' || piece === 'queen' || piece === 'king') setScaleRoundedBox(4)
+        if (piece === 'knight') setScaleRoundedBox(4.9)
+        if (piece === 'bishop') setScaleRoundedBox(4.5)
+        
         setTimeout(() => {
-            if (piece === 'pawn' && !test) return pawn.play()
-            if (piece === 'rook' && !test) return rook.play()
-            if (piece === 'queen' && !test) return queen.play()
-            if (piece === 'king' && !test) return king.play()
-            if (piece === 'knight' && !test) return knight.play()
-            if (piece === 'bishop' && !test) return bishop.play()
-
+            
+            if (piece === 'pawn' && !audio) return pawn.play()
+            if (piece === 'rook' && !audio) return rook.play()
+            if (piece === 'queen' && !audio) return queen.play()
+            if (piece === 'king' && !audio) return king.play()
+            if (piece === 'knight' && !audio) return knight.play()
+            if (piece === 'bishop' && !audio) return bishop.play()
+            
         }, 100)
         if (active === piece) setTimeout(() => { return setActive(null) }, 250)
         setActive(piece)
@@ -80,15 +84,15 @@ const Experience = () => {
                 zoom={0}
                 maxPolarAngle={Math.PI / 1.8}
                 minPolarAngle={Math.PI / 2.5} />
-            {active !== null && <RoundedBoxForEach test={test}>
-
+           
+                
+            {active !== null && <RoundedBoxForEach audio={audio} scaleRoundedBox={scaleRoundedBox}>
                 {active === 'pawn' && (pawnDetails)}
-                {active === 'rook' && 'The rook is one of the most important pieces in the game'}
-                {active === 'bishop' && 'The bishop is one of the most important pieces in the game'}
-                {active === 'king' && 'The king is one of the most important pieces in the game'}
-                {active === 'queen' && 'The queen is one of the most important pieces in the game'}
-                {active === 'knight' && 'The knight is one of the most important pieces in the game'}
-
+                {active === 'rook' && (rookDetails)}
+                {active === 'bishop' && (bishopDetails) }
+                {active === 'king' &&  (kingDetails)}
+                {active === 'queen' && (queenDetails)}
+                {active === 'knight' && (knightDetails) }
             </RoundedBoxForEach >}
             <Pawn
                 scale={scale.scalePawn}
@@ -142,7 +146,7 @@ const Experience = () => {
     )
 }
 
-const RoundedBoxForEach = ({ children, test }) => {
+const RoundedBoxForEach = ({ children, audio, scaleRoundedBox }) => {
     const [isUnmounted, setIsUnmounted] = useState(false);
 
     const positionAnimation = useSpring({
@@ -157,16 +161,16 @@ const RoundedBoxForEach = ({ children, test }) => {
     });
 
     useEffect(() => {
-        if (!test) {
+        if (!audio) {
             // Si active pasa a ser null, establecemos isUnmounted en true para la última animación
             setIsUnmounted(true);
         }
-    }, [test]);
+    }, [audio]);
 
     return (
         <a.group {...positionAnimation}>
             <RoundedBox
-                args={[5.5, 4, 0.2]}
+                args={[5.5, scaleRoundedBox, 0.2]}
                 material-color="black"
                 radius={0.08} // Radius of the rounded corners. Default is 0.05
                 smoothness={4} // The number of curve segments. Default is 4
